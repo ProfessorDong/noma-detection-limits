@@ -1,0 +1,17 @@
+__pycache__/
+*.pyc
+*.pyo
+*.npz
+*.eps
+*.pdf
+*.png
+*.aux
+*.log
+*.out
+*.toc
+*.bbl
+*.blg
+*.synctex.gz
+.ipynb_checkpoints/
+.vscode/
+.idea/
