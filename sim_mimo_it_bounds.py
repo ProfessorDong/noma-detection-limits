@@ -409,7 +409,7 @@ def plot_mimo_mi_comparison(snr_2, res_2, snr_4, res_4, filename):
         if ax_idx == 0:
             ax.set_ylabel('Mutual Information (bits)', fontsize=12)
         ax.set_title(f'QPSK, $N_r = {Nr}$', fontsize=12)
-        ax.legend(fontsize=9, loc='upper left', framealpha=0.5)
+        ax.legend(fontsize=11, loc='upper left', framealpha=0.5)
         ax.set_ylim(bottom=-0.1)
         ax.grid(True, alpha=0.3)
 
@@ -485,7 +485,7 @@ def plot_mimo_diversity_gain(results_by_nr, snr_ranges, filename):
     ax.set_xlabel('SNR (dB)', fontsize=12)
     ax.set_ylabel('SER', fontsize=12)
     ax.set_title('MAP vs Oracle SER', fontsize=12)
-    ax.legend(fontsize=8, loc='lower left', framealpha=0.5)
+    ax.legend(fontsize=10, loc='lower left', framealpha=0.5)
     ax.set_ylim(bottom=5e-6, top=1.5)
     ax.grid(True, alpha=0.3)
 
@@ -501,7 +501,7 @@ def plot_mimo_diversity_gain(results_by_nr, snr_ranges, filename):
     ax.set_xlabel('SNR (dB)', fontsize=12)
     ax.set_ylabel('SER$_{\\mathrm{MAP}}$ / SER$_{\\mathrm{Oracle}}$', fontsize=12)
     ax.set_title('MAP-Oracle Gap Ratio', fontsize=12)
-    ax.legend(fontsize=10, framealpha=0.5)
+    ax.legend(fontsize=11, framealpha=0.5)
     ax.axhline(y=1.0, color='gray', linestyle=':', linewidth=0.8, alpha=0.5)
     ax.grid(True, alpha=0.3)
 
@@ -549,7 +549,7 @@ def plot_mimo_nr_mi_tradeoff(results_by_nr, snr_ranges, filename):
     ax.set_ylabel('Mutual Information (bits)', fontsize=8)
     ax.set_title('QPSK: MI vs. $N_r$', fontsize=8)
     ax.set_xticks(Nr_vals)
-    ax.legend(fontsize=6.5, loc='lower right', framealpha=0.9, ncol=2)
+    ax.legend(fontsize=7, loc='lower right', framealpha=0.5, ncol=2)
     ax.grid(True, alpha=0.3)
     ax.set_ylim(bottom=0)
 
