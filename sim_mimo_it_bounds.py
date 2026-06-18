@@ -7,7 +7,7 @@ Computes MIMO MI bounds for uplink NOMA with Nr receive antennas:
   - I_MAP: Marginal MAP MI (CCMI)
   - I_oracle: Oracle MI (perfect cancellation + single-user CCMI)
   - Gaussian capacity reference
-  - SER curves: MMSE, MMSE-SIC, Oracle SIC, Exact MAP
+  - SER curves: MMSE, MMSE-SIC, Oracle, Exact MAP
 
 Generates figures:
   fig_mimo_mi_comparison.eps  — MI hierarchy for Nr=2 and Nr=4
@@ -432,7 +432,7 @@ def plot_mimo_ser_comparison(snr_2, res_2, snr_4, res_4, filename):
     det_styles = {
         'SER_MMSE': ('v', 'gray', ':', 'MMSE'),
         'SER_MMSE_SIC': ('s', '#d62728', '--', 'MMSE-SIC'),
-        'SER_Oracle': ('^', '#2ca02c', '-.', 'Oracle SIC'),
+        'SER_Oracle': ('^', '#2ca02c', '-.', 'Oracle'),
         'SER_MAP': ('D', '#1f77b4', '-', 'Exact MAP'),
     }
 
