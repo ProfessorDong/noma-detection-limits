@@ -949,27 +949,29 @@ def plot_power_mi(results, filename):
             markersize=4, linewidth=1.0, label=r'$I_{\mathrm{oracle}}$',
             markerfacecolor='none')
 
-    # Annotate key power configs: equal (first), default ~[0.2,0.3,0.5], extreme (last)
+    # Annotate key power configs with a short arrow to the exact sweep point:
+    # equal power (first), near-default, and extreme (last). Values are shown
+    # with strict per-digit 2-decimal rounding, so the equal-power point reads
+    # (0.33,0.33,0.33) rather than a spurious asymmetric vector.
     n_pts = len(results['P_configs'])
-    # Index closest to t=1 (default): t_vals has equal spacing, t=1 is at index ~n/t_max
-    idx_default = min(range(n_pts), key=lambda i: abs(np.std(results['P_configs'][i]) - 0.1247))
+    idx_default = min(range(n_pts),
+                      key=lambda i: abs(np.std(results['P_configs'][i]) - 0.1247))
+    # Per-point text offsets (in points), placing each label in clear space.
+    offsets = {0: (34, -2), idx_default: (-10, 16), n_pts - 1: (12, 16)}
     for i, P in enumerate(results['P_configs']):
-        if i in [0, idx_default, n_pts - 1]:
-            # Round to 2 decimals but absorb the rounding residual into the
-            # largest component so the displayed vector sums to exactly 1.00.
-            r = [round(float(p), 2) for p in P]
-            resid = round(1.0 - sum(r), 2)
-            jmax = int(np.argmax(P))
-            r[jmax] = round(r[jmax] + resid, 2)
-            label = f'({r[0]:.2f},{r[1]:.2f},{r[2]:.2f})'
-            ax.annotate(label, (diff[i], results['I_MAP'][i]),
-                       textcoords="offset points", xytext=(5, 8),
-                       fontsize=7.5, color='#1f77b4')
+        if i in offsets:
+            label = f'({P[0]:.2f},{P[1]:.2f},{P[2]:.2f})'
+            ax.annotate(label, xy=(diff[i], results['I_MAP'][i]),
+                        xytext=offsets[i], textcoords="offset points",
+                        fontsize=7.5, color='#1f77b4',
+                        arrowprops=dict(arrowstyle='->', color='#1f77b4',
+                                        lw=0.7, shrinkA=1, shrinkB=2))
 
     ax.set_xlabel('Power Differentiation (std of $\\mathbf{P}$)', fontsize=8)
     ax.set_ylabel('Mutual Information (bits)', fontsize=8)
     ax.set_title('QPSK, SNR = 15 dB: MI vs. Power Allocation', fontsize=8)
-    ax.legend(fontsize=7, loc='best', framealpha=0.5)
+    ax.legend(fontsize=8.5, loc='center left', bbox_to_anchor=(0.0, 0.72),
+              framealpha=0.5)
     ax.grid(True, alpha=0.3)
 
     fig.savefig(filename, format='eps')

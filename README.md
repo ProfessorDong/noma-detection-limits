@@ -27,17 +27,22 @@ and figure in the manuscript.
 | `sim_mimo_noma.py` | Base MIMO uplink NOMA library: spatial channel, MMSE / MMSE-SIC / MAP / oracle detectors |
 | `sim_it_bounds.py` | SISO information-theoretic bounds: CCMI hierarchy, structural gain and oracle deficit, Fano/PEP SER bounds, composite minimum-distance geometry, power-differentiation sweep |
 | `sim_mimo_it_bounds.py` | MIMO information-theoretic bounds: MI hierarchy, SER, MAP-oracle gap vs. spatial diversity, the $N_r = K$ regime transition |
-| `sim_revision1.py` | Revision additions: imperfect-CSI GMI, per-user fairness, and the power-allocation universality sweep across $K$ and modulation |
+| `sim_revision1.py` | First-round revision additions: imperfect-CSI GMI, per-user fairness, and the power-allocation universality sweep across $K$ and modulation |
+| `sim_revision2.py` | Second-round revision additions: the nearest-neighbor multiplicity factor (deterministic), MIMO-NOMA under spatially correlated receive channels, and an expectation-propagation (EP) approximate-MAP detector |
 | `replot_it_bounds.py` | Regenerate the SISO figures from cached results, without re-running the simulation |
 | `replot_mimo.py` | Regenerate the MIMO figures from cached results |
-| `replot_revision1.py` | Regenerate the revision figures from cached results |
+| `replot_revision1.py` | Regenerate the first-round revision figures from cached results |
+| `replot_revision2.py` | Regenerate the second-round revision figures from cached results |
 | `sim_it_bounds_results.pkl` | Cached SISO Monte Carlo results (MI/SER vs. SNR, power sweep) |
 | `sim_mimo_results.pkl` | Cached MIMO Monte Carlo results (MI/SER vs. SNR for $N_r \in \{1,2,3,4\}$) |
 | `revision1_results.json` | Cached imperfect-CSI, fairness, and power-universality results |
+| `sim_revision2_corr.pkl` | Cached correlated-channel MI sweep (MI hierarchy vs. SNR for $N_r \in \{3,4\}$, receive correlation $r \in \{0, 0.7, 0.9\}$) |
+| `sim_revision2_ep.pkl` | Cached EP approximate-MAP SER ($N_r = 2$) |
 
 `sim_it_bounds.py` and `sim_revision1.py` import `sim_learned_mud`;
-`sim_mimo_it_bounds.py` imports `sim_mimo_noma`. All four base/analysis modules
-are bundled here, so the repository is self-contained.
+`sim_mimo_it_bounds.py` imports `sim_mimo_noma`; and `sim_revision2.py` imports
+both `sim_mimo_noma` and `sim_mimo_it_bounds`. All base/analysis modules are
+bundled here, so the repository is self-contained.
 
 ## Requirements
 
@@ -57,8 +62,11 @@ python sim_it_bounds.py
 # MIMO bounds: MI hierarchy, SER, MAP-oracle gap, regime transition at N_r = K
 python sim_mimo_it_bounds.py
 
-# Revision additions: imperfect CSI, multi-user fairness, power-allocation universality
+# First-round revision additions: imperfect CSI, multi-user fairness, power-allocation universality
 python sim_revision1.py
+
+# Second-round revision additions: multiplicity factor, correlated channels, EP approximate-MAP detector
+python sim_revision2.py
 ```
 
 The cached `.pkl` / `.json` results are included, so the figures can be
@@ -68,6 +76,7 @@ regenerated in seconds **without a GPU**:
 python replot_it_bounds.py
 python replot_mimo.py
 python replot_revision1.py
+python replot_revision2.py
 ```
 
 ## Reproducibility notes
@@ -86,6 +95,14 @@ python replot_revision1.py
   `replot_*.py` scripts to regenerate them.
 - The 16-QAM, $K=4$ marginal-MAP case enumerates $16^4 = 65536$ composite
   hypotheses and is skipped on an 8 GB GPU.
+- The second-round additions (`sim_revision2.py`) compute the nearest-neighbor
+  multiplicity factor deterministically by enumerating the composite
+  constellation (no Monte Carlo), use 1,500,000 samples per SNR point for the
+  correlated-channel MI sweep, and 4,000,000 for the EP approximate-MAP SER.
+  Receive correlation uses the exponential model $[\mathbf{R}]_{mn} = r^{|m-n|}$,
+  and the EP detector runs 10 iterations with damping 0.2. The EP run reuses the
+  same seeds as `sim_mimo_results.pkl`, so the MMSE-SIC / MAP / Oracle curves in
+  the regenerated SER figure are identical to those of `sim_mimo_it_bounds.py`.
 
 ## License
 

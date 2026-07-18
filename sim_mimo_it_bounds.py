@@ -19,7 +19,9 @@ Author: Liang Dong, Baylor University
 """
 
 import sys
-sys.stdout = open(sys.stdout.fileno(), mode='w', buffering=1)
+# NOTE (R2): stdout reopen removed here to avoid closing fd 1 when this
+# module is imported alongside sim_mimo_noma (which reopens stdout once).
+# Standalone runs still get line-buffered output via PYTHONUNBUFFERED=1.
 
 import numpy as np
 import torch
