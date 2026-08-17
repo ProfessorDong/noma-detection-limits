@@ -4,7 +4,10 @@ Reproducibility code for the paper
 
 > **Liang Dong and Robert W. Heath Jr.**, "On the Detection Limits of
 > Power-Domain NOMA: Information-Theoretic Bounds and Spatial Diversity,"
-> *IEEE Transactions on Communications*, 2026 (under review).
+> *IEEE Transactions on Communications*, 2026, to appear.
+
+Accepted for publication in August 2026. The DOI and volume/page details will be
+added here once the article appears in IEEE Xplore Early Access.
 
 The paper develops an information-theoretic framework for the detection limits
 of power-domain NOMA under finite-alphabet modulation. It identifies the two
